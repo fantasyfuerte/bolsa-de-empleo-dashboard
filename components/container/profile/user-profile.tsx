@@ -25,7 +25,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -56,7 +55,7 @@ import { redirect } from "next/navigation";
 
 export default function UserProfile() {
   const { user } = useUserStore();
-  if (!user) redirect("/register")
+  if (!user) redirect("/register");
   const {
     role,
     avatar,
@@ -291,7 +290,7 @@ export default function UserProfile() {
                 Datos Profesionales
               </TabsTrigger>
               <TabsTrigger className="cursor-pointer" value="preferences">
-                Preferencias
+                Documentos
               </TabsTrigger>
               <TabsTrigger className="cursor-pointer" value="security">
                 Seguridad
@@ -635,130 +634,51 @@ export default function UserProfile() {
             <TabsContent value="preferences" className="space-y-4">
               <Card>
                 <CardHeader>
-                  <CardTitle>Preferences</CardTitle>
+                  <CardTitle>Tus Documentos</CardTitle>
                   <CardDescription>
-                    Personalize your experience on the platform
+                    Aquí puedes subir y descargar tus documentos
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-2">
-                    <Label>Notifications</Label>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="space-y-0.5">
-                          <Label className="text-base">
-                            Notifications by Email
-                          </Label>
-                          <p className="text-sm text-muted-foreground">
-                            Receive updates and reminders by email
-                          </p>
-                        </div>
-                        <Switch
-                          checked={emailNotifications}
-                          onCheckedChange={setEmailNotifications}
-                          disabled={!isEditing}
-                        />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div className="space-y-0.5">
-                          <Label className="text-base">
-                            Notifications in the App
-                          </Label>
-                          <p className="text-sm text-muted-foreground">
-                            Receive notifications within the platform
-                          </p>
-                        </div>
-                        <Switch
-                          checked={appNotifications}
-                          onCheckedChange={setAppNotifications}
-                          disabled={!isEditing}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="language-preference">
-                      Language of the Platform
-                    </Label>
-                    <Select disabled={!isEditing} defaultValue="es">
-                      <SelectTrigger
-                        id="language-preference"
-                        className={!isEditing ? "opacity-70" : ""}
+                    <div className="flex items-center justify-between">
+                      <label
+                        htmlFor="id-document"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
-                        <SelectValue placeholder="Seleccionar idioma" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="es">Español</SelectItem>
-                        <SelectItem value="en">English</SelectItem>
-                        <SelectItem value="fr">Français</SelectItem>
-                        <SelectItem value="de">Deutsch</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="theme-preference">Theme</Label>
-                    <Select disabled={!isEditing} defaultValue="light">
-                      <SelectTrigger
-                        id="theme-preference"
-                        className={!isEditing ? "opacity-70" : ""}
-                      >
-                        <SelectValue placeholder="Seleccionar tema" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="accessibility">Accessibility</Label>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="space-y-0.5">
-                          <Label className="text-base">High Contrast</Label>
-                          <p className="text-sm text-muted-foreground">
-                            Increase contrast of elements
-                          </p>
-                        </div>
-                        <Switch disabled={!isEditing} />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div className="space-y-0.5">
-                          <Label className="text-base">Reduce Animations</Label>
-                          <p className="text-sm text-muted-foreground">
-                            Minimize animation effects
-                          </p>
-                        </div>
-                        <Switch disabled={!isEditing} />
-                      </div>
+                        Curriculum Vitae
+                      </label>
+                      <span className="text-sm text-red-700 font-semibold">Requerido</span>
                     </div>
+                    <div className="flex items-center gap-4">
+                      <input
+                        id="id-document"
+                        type="file"
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        accept=".pdf,.docx,.txt"
+                      />
+                      <Button variant="outline" size="sm">
+                        Upload
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Formatos aceptados: pdf, docx, txt
+                    </p>
                   </div>
                 </CardContent>
-                {isEditing && (
-                  <CardFooter>
-                    <Button onClick={handleSaveProfile} className="ml-auto">
-                      Save Preferences
-                    </Button>
-                  </CardFooter>
-                )}
               </Card>
             </TabsContent>
 
             <TabsContent value="security" className="space-y-4">
               <Card>
                 <CardHeader>
-                  <CardTitle>Security</CardTitle>
+                  <CardTitle>Seguridad</CardTitle>
                   <CardDescription>
-                    Manage your account security
+                    Gestiona la seguridad de tu cuenta
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-2">
-                    <Label>Change Password</Label>
                     <div className="space-y-4">
                       <div className="space-y-2">
                         <Label htmlFor="current-password">
