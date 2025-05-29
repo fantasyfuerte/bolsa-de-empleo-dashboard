@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { redirect, usePathname } from "next/navigation";
-import SidebarLink from "../ui/custom/sidebar-link";
+import SidebarLink from "../../ui/custom/sidebar-link";
 import { LogOut, User, } from "lucide-react";
 import { routes } from "@/lib/routes";
 import Logo from "@/assets/logo-sidebar.png";
@@ -10,11 +10,9 @@ import { useUserStore } from "@/stores/user-store";
 
 export function Sidebar() {
   const { user } = useUserStore();
-  if (!user) redirect("localhost:3001/login");
+  if (!user) redirect("localhost:3001/login");//login url
   const { isAdmin } = user;
-
   const pathname = usePathname();
-  console.log(pathname)
   const sidebarLinks = isAdmin ? routes.admin : routes.user;
   return (
     <div className="bg-background border-r h-screen p-4">
@@ -31,9 +29,9 @@ export function Sidebar() {
             active={pathname === link.href}
           />
         ))}
-        <div className="absolute bottom-4 w-[217px]">
+        <div className="absolute bottom-4 space-y-2 w-[217px]">
           <SidebarLink href="/profile" icon={User} text="Profile" active={pathname=="/profile"} />
-          <SidebarLink href="/login" icon={LogOut} text="Cerrar sesión" />
+          <SidebarLink href="/register" icon={LogOut} text="Cerrar sesión" />
         </div>
       </nav>
     </div>

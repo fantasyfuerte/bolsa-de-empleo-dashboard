@@ -18,7 +18,7 @@ export default function SidebarLink({
   return (
     <Link
       href={href}
-      className={`flex items-center gap-3 px-4 py-3 rounded-md ${
+      className={`flex w-full items-center gap-3 px-4 py-3 rounded-md ${
         active
           ? "bg-primary/10 text-primary font-medium"
           : "text-gray-600 hover:bg-gray-100"

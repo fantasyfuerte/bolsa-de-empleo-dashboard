@@ -122,6 +122,17 @@
   }
 }
 
-.dar{
-  color: #1c868b
+.animate-enter {
+  animation: enter-screen 1s ease-out;
+}
+
+@keyframes enter-screen {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

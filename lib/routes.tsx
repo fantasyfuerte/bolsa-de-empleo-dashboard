@@ -30,7 +30,7 @@ export const routes = {
       text: "Resumen",
     },
     {
-      href: "/jobs",
+      href: "/posts",
       icon: ClipboardList,
       text: "Publicaciones",
     },
@@ -42,7 +42,7 @@ export const routes = {
     {
       href: "/subscriptions",
       icon: Gem,
-      text: "Suscripciones",
+      text: "Suscripción",
     },
   ],
 };

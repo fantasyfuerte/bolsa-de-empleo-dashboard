@@ -52,11 +52,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { redirect } from "next/navigation";
 
 export default function UserProfile() {
-  
   const { user } = useUserStore();
-  if (!user) return <div>Loading...</div>;
+  if (!user) redirect("/register")
   const {
     role,
     avatar,
@@ -158,12 +158,11 @@ export default function UserProfile() {
     setIsEditing(false);
   };
 
-
   return (
     <div className="flex-1 space-y-7">
-      <article className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">
+      <article className="flex md:items-center md:justify-between flex-col md:flex-row gap-2">
+        <div className="">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
             Perfil de {name}
           </h1>
           <p className="text-muted-foreground">
@@ -200,7 +199,7 @@ export default function UserProfile() {
         </div>
       </article>
 
-      <div className="grid gap-4 md:grid-cols-7">
+      <div className="md:grid gap-4 md:grid-cols-7">
         <Card className="md:col-span-2 shadow-none border-none">
           <CardHeader className="flex flex-col items-center text-center">
             <div className="relative mb-2">
@@ -282,9 +281,9 @@ export default function UserProfile() {
           </CardContent>
         </Card>
 
-        <div className="space-y-4 md:col-span-5">
+        <div className="space-y-4  md:col-span-5">
           <Tabs defaultValue="personal" className="space-y-4">
-            <TabsList>
+            <TabsList className="grid grid-cols-2 w-full h-fit gap-2 md:flex md:w-fit">
               <TabsTrigger className="cursor-pointer" value="personal">
                 Información Personal
               </TabsTrigger>
