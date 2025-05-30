@@ -52,6 +52,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { redirect } from "next/navigation";
+import { Switch } from "@/components/ui/switch";
 
 export default function UserProfile() {
   const { user } = useUserStore();
@@ -84,8 +85,10 @@ export default function UserProfile() {
   } = user;
 
   const [isEditing, setIsEditing] = useState(false);
+  const [deleteMode, setDeleteMode] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(true);
-  const [appNotifications, setAppNotifications] = useState(true);
+  const [profileIsPublic, setProfileIsPublic] = useState(true);
+  const [curriculumIsPublic, setCurriculumIsPublic] = useState(true);
   const [countryState, setCountryState] = useState(country);
   const [provinceState, setProvinceState] = useState(province);
   const [desiredJobsState, setDesiredJobsState] =
@@ -289,11 +292,11 @@ export default function UserProfile() {
               <TabsTrigger className="cursor-pointer" value="professional">
                 Datos Profesionales
               </TabsTrigger>
-              <TabsTrigger className="cursor-pointer" value="preferences">
+              <TabsTrigger className="cursor-pointer" value="documents">
                 Documentos
               </TabsTrigger>
-              <TabsTrigger className="cursor-pointer" value="security">
-                Seguridad
+              <TabsTrigger className="cursor-pointer" value="settings">
+                Ajustes
               </TabsTrigger>
             </TabsList>
 
@@ -631,7 +634,7 @@ export default function UserProfile() {
               </Card>
             </TabsContent>
 
-            <TabsContent value="preferences" className="space-y-4">
+            <TabsContent value="documents" className="space-y-4">
               <Card>
                 <CardHeader>
                   <CardTitle>Tus Documentos</CardTitle>
@@ -648,7 +651,9 @@ export default function UserProfile() {
                       >
                         Curriculum Vitae
                       </label>
-                      <span className="text-sm text-red-700 font-semibold">Requerido</span>
+                      <span className="text-sm text-red-700 font-semibold">
+                        Requerido
+                      </span>
                     </div>
                     <div className="flex items-center gap-4">
                       <input
@@ -669,20 +674,73 @@ export default function UserProfile() {
               </Card>
             </TabsContent>
 
-            <TabsContent value="security" className="space-y-4">
+            <TabsContent value="settings" className="space-y-4">
               <Card>
-                <CardHeader>
-                  <CardTitle>Seguridad</CardTitle>
-                  <CardDescription>
-                    Gestiona la seguridad de tu cuenta
-                  </CardDescription>
-                </CardHeader>
                 <CardContent className="space-y-6">
-                  <div className="space-y-2">
-                    <div className="space-y-4">
+                  <div className="space-y-10">
+                    <article className="space-y-4">
+                      <div className="space-y-1.5">
+                        <CardTitle>Preferencias</CardTitle>
+                        <CardDescription>
+                          Gestiona las preferencias de tu cuenta
+                        </CardDescription>
+                      </div>
+                      <div className="flex items-center justify-between ">
+                        <div className="space-y-1.5">
+                          <Label>Notificar por Correo Electrónico</Label>
+
+                          <CardDescription>
+                            Recibe notificaciones por vía correo
+                          </CardDescription>
+                        </div>
+                        <Switch
+                          checked={emailNotifications}
+                          onCheckedChange={setEmailNotifications}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="flex items-center justify-between ">
+                        <div className="space-y-1.5">
+                          <Label>Compartir mi Currículum</Label>
+
+                          <CardDescription>
+                            Tu currículum será visible para las empresas y
+                            usuarios de la plaforma
+                          </CardDescription>
+                        </div>
+                        <Switch
+                          checked={profileIsPublic}
+                          onCheckedChange={setProfileIsPublic}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="flex items-center justify-between ">
+                        <div className="space-y-1.5">
+                          <Label>Compartir mi Perfil</Label>
+
+                          <CardDescription>
+                            Tu perfil será público para los usuarios de la
+                            plataforma
+                          </CardDescription>
+                        </div>
+                        <Switch
+                          checked={curriculumIsPublic}
+                          onCheckedChange={setCurriculumIsPublic}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                    </article>
+
+                    <article className="space-y-4">
+                      <div className="space-y-1.5">
+                        <CardTitle>Cambio de Contraseña</CardTitle>
+                        <CardDescription>
+                          Cambia tu contraseña actual por una nueva contraseña
+                        </CardDescription>
+                      </div>
                       <div className="space-y-2">
                         <Label htmlFor="current-password">
-                          Current Password
+                          Contraseña actual
                         </Label>
                         <Input
                           id="current-password"
@@ -692,7 +750,7 @@ export default function UserProfile() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="new-password">New Password</Label>
+                        <Label htmlFor="new-password">Nueva Contraseña</Label>
                         <Input
                           id="new-password"
                           type="password"
@@ -702,7 +760,7 @@ export default function UserProfile() {
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="confirm-password">
-                          Confirm New Password
+                          Confirmar Nueva Contraseña
                         </Label>
                         <Input
                           id="confirm-password"
@@ -711,16 +769,53 @@ export default function UserProfile() {
                           className={!isEditing ? "opacity-70" : ""}
                         />
                       </div>
-                    </div>
+                    </article>
+                    <article className="space-y-4">
+                      <div className="space-y-1.5">
+                        <CardTitle className="text-red-800">
+                          Eliminación de Cuenta
+                        </CardTitle>
+                        <CardDescription className="text-red-950">
+                          Al eliminar tu cuenta, se eliminarán todos tus datos
+                          personales e información profesional
+                        </CardDescription>
+                      </div>
+                      {deleteMode ? (
+                        <>
+                          <div className="space-y-2">
+                            <Label htmlFor="new-password">
+                              Introduce tu contraseña
+                            </Label>
+                            <Input type="password" />
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <Button
+                              className="mt-2 hover:bg-red-950"
+                              variant={"destructive"}
+                            >
+                              Eliminar Cuenta
+                            </Button>
+                            <Button
+                              onClick={() => setDeleteMode(false)}
+                              className="mt-2 hover:opacity-65"
+                              variant={"secondary"}
+                            >
+                              Cancelar
+                            </Button>
+                          </div>
+                        </>
+                      ) : (
+                        <Button
+                          onClick={() => setDeleteMode(true)}
+                          className="text-red-900"
+                          variant={"ghost"}
+                        >
+                          Deseo eliminar mi cuenta
+                        </Button>
+                      )}
+                    </article>
                   </div>
                 </CardContent>
-                {isEditing && (
-                  <CardFooter>
-                    <Button onClick={handleSaveProfile} className="ml-auto">
-                      Save Security Settings
-                    </Button>
-                  </CardFooter>
-                )}
               </Card>
             </TabsContent>
           </Tabs>
