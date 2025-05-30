@@ -85,6 +85,7 @@ export default function UserProfile() {
 
   const [isEditing, setIsEditing] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
+  const [deleteEnabled, setDeleteEnabled] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [profileIsPublic, setProfileIsPublic] = useState(true);
   const [curriculumIsPublic, setCurriculumIsPublic] = useState(true);
@@ -783,23 +784,39 @@ export default function UserProfile() {
                         <>
                           <div className="space-y-2">
                             <Label htmlFor="new-password">
-                              Introduce tu contraseña
+                              Escribe manualmente en minúsculas{" "}
+                              <strong className="text-red-700">
+                                deseo eliminar mi cuenta
+                              </strong>
                             </Label>
-                            <Input type="password" />
+                            <Input
+                              type="text"
+                              onChange={(e) => {
+                                if (
+                                  e.target.value.toLowerCase() ===
+                                  "deseo eliminar mi cuenta"
+                                ) {
+                                  setDeleteEnabled(true);
+                                } else {
+                                  setDeleteEnabled(false);
+                                }
+                              }}
+                            />
                           </div>
                           <div className="flex items-center gap-3">
                             <Button
-                              className="mt-2 hover:bg-red-950"
-                              variant={"destructive"}
-                            >
-                              Eliminar Cuenta
-                            </Button>
-                            <Button
                               onClick={() => setDeleteMode(false)}
                               className="mt-2 hover:opacity-65"
-                              variant={"secondary"}
+                              variant={"default"}
                             >
                               Cancelar
+                            </Button>
+                            <Button
+                              className="mt-2 text-red-900 hover:text-red-700"
+                              variant={"link"}
+                              disabled={!deleteEnabled}
+                            >
+                              Eliminar Cuenta
                             </Button>
                           </div>
                         </>
