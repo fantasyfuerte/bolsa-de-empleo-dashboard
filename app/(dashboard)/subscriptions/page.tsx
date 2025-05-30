@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Clock } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -23,14 +24,23 @@ const plans = [
 function SubscriptionsUserPage() {
   return (
     <section>
-      <div>
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
-          Tus Suscripciones
-        </h1>
-        <p className="text-muted-foreground">
-          Adquiere planes de suscripción para recibir funcionalidades exclusivas
-        </p>
-      </div>
+      <article className="flex md:items-center md:justify-between flex-col md:flex-row gap-2">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
+            Tus Suscripciones
+          </h1>
+          <p className="text-muted-foreground">
+            Adquiere planes de suscripción para recibir funcionalidades
+            exclusivas
+          </p>
+        </div>
+        <Link href={"/subscriptions/history"} className="">
+          <Button variant="secondary"className="text-primary">
+            <Clock className="mr-2 h-4 w-4" />
+            Ver Historial
+          </Button>
+        </Link>
+      </article>
       <article className="grid md:grid-cols-3 gap-2 pt-5">
         {plans.map((plan) => (
           <Link key={plan.id} href={`/subscriptions/${plan.id}`}>

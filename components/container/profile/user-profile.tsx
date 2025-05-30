@@ -175,14 +175,14 @@ export default function UserProfile() {
           {isEditing ? (
             <div className="flex items-center gap-2">
               <Button
-                className="text-md cursor-pointer"
+                className="cursor-pointer"
                 variant="outline"
                 onClick={() => setIsEditing(false)}
               >
                 Cancelar
               </Button>
               <Button
-                className="text-md cursor-pointer"
+                className="cursor-pointer"
                 onClick={handleSaveProfile}
               >
                 <Save className="mr-2 h-4 w-4" />
@@ -191,7 +191,7 @@ export default function UserProfile() {
             </div>
           ) : (
             <Button
-              className="text-md cursor-pointer"
+              className="cursor-pointer"
               onClick={() => setIsEditing(true)}
             >
               <Edit strokeWidth={2.5} className="mr-1 h-4 w-4" />
@@ -793,7 +793,7 @@ export default function UserProfile() {
                               type="text"
                               onChange={(e) => {
                                 if (
-                                  e.target.value.toLowerCase() ===
+                                  e.target.value.toLowerCase().trim() ===
                                   "deseo eliminar mi cuenta"
                                 ) {
                                   setDeleteEnabled(true);
@@ -816,7 +816,7 @@ export default function UserProfile() {
                               variant={"link"}
                               disabled={!deleteEnabled}
                             >
-                              Eliminar Cuenta
+                              Eliminar
                             </Button>
                           </div>
                         </>

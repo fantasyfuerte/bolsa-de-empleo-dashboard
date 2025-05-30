@@ -12,7 +12,7 @@ function DashboardLayout({
       <aside className="hidden md:block">
         <Sidebar />
       </aside>
-      <header className="fixed w-full flex justify-between items-center p-3 bg-primary/10 backdrop-blur-sm md:hidden rounded-xl z-50">
+      <header className="fixed w-full flex justify-between items-center p-3 bg-primary/10 backdrop-blur-sm md:hidden rounded-b-xl z-50">
         <Link className="cursor-pointer" href={"/"}>
           <Image src={Logo} alt="Logo" width={35} height={0} />
         </Link>
